@@ -1,18 +1,7 @@
-defmodule Example do
-  @moduledoc """
-  Documentation for Example.
-  """
+defmodule EX.Application do
+  use Application
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Example.hello
-      :world
-
-  """
-  def hello do
-    :world
+  def start(_type, _args) do
+    EX.Worker.start_link(name: EX.Worker)
   end
 end
