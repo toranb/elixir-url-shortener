@@ -1,4 +1,4 @@
-defmodule Shortener do
+defmodule EX.Shortener do
   def new(), do: %{}
 
   def create_short_url(state, hash, url) do

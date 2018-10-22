@@ -1,6 +1,8 @@
 defmodule EX.Worker do
   use GenServer
 
+  alias EX.Shortener
+
   def start_link(args) do
     GenServer.start_link(__MODULE__, :ok, args)
   end
