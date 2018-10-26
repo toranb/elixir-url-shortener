@@ -3,22 +3,29 @@ defmodule EX.Worker do
 
   alias EX.Shortener
 
-  def start_link(args) do
-    GenServer.start_link(__MODULE__, :ok, args)
+  def start_link(_args) do
+    GenServer.start_link(__MODULE__, :ok, name: via(:worker))
   end
+
+  defp via(name), do: EX.Registry.via(name)
 
   @impl GenServer
   def init(:ok) do
-    state = Shortener.new()
-    {:ok, state}
+    state = EX.Cache.all(:cache)
+    {:ok, state, {:continue, :init}}
   end
 
-  def get(pid, hash) do
-    GenServer.call(pid, {:get, hash})
+  @impl GenServer
+  def handle_continue(:init, state) do
+    {:noreply, state}
   end
 
-  def put(pid, hash, url) do
-    GenServer.cast(pid, {:put, hash, url})
+  def get(name, hash) do
+    GenServer.call(via(name), {:get, hash})
+  end
+
+  def put(name, hash, url) do
+    GenServer.cast(via(name), {:put, hash, url})
   end
 
   @impl GenServer
@@ -29,6 +36,7 @@ defmodule EX.Worker do
   @impl GenServer
   def handle_cast({:put, hash, url}, state) do
     new_state = Shortener.create_short_url(state, hash, url)
+    EX.Cache.put(:cache, hash, url)
     {:noreply, new_state}
   end
 end

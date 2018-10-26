@@ -6,7 +6,11 @@ defmodule EX.Supervisor do
   end
 
   def init(:ok) do
-    children = [EX.Worker]
+    children = [
+      {Registry, keys: :unique, name: EX.Registry},
+      EX.Cache,
+      EX.Worker
+    ]
     Supervisor.init(children, strategy: :one_for_one)
   end
 end
