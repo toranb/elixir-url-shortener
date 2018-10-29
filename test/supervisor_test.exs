@@ -1,6 +1,10 @@
 defmodule EX.SupervisorTest do
   use ExUnit.Case, async: true
 
+  setup do
+    TestProject.Helpers.cleanup
+  end
+
   test "a new child process will restart as needed" do
     {:ok, _} = GenServer.start_link(EX.Supervisor, :ok)
 
