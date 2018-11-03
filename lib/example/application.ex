@@ -5,6 +5,7 @@ defmodule EX.Application do
     import Supervisor.Spec
 
     children = [
+      supervisor(ExampleWeb.Endpoint, []),
       {Registry, keys: :unique, name: EX.Registry},
       EX.Cache,
       EX.Worker
