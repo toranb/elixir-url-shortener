@@ -7,14 +7,7 @@ defmodule ExampleWeb.UrlController do
   end
 
   def create(conn, %{"link" => %{"url" => url}}) do
-    id = hmac(url)
-    EX.Worker.put(:worker, id, url)
-    render(conn, "show.json", %{id: id, url: url})
-  end
-
-  defp hmac(url) do
-    :crypto.hmac(:sha256, "example", url)
-      |> Base.encode16
-      |> String.slice(0, 6)
+    {key, value} = EX.Worker.put(:worker, url)
+    render(conn, "show.json", %{id: key, url: value})
   end
 end

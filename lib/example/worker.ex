@@ -24,8 +24,8 @@ defmodule EX.Worker do
     GenServer.call(via(name), {:get, hash})
   end
 
-  def put(name, hash, url) do
-    GenServer.cast(via(name), {:put, hash, url})
+  def put(name, url) do
+    GenServer.call(via(name), {:put, url})
   end
 
   @impl GenServer
@@ -34,9 +34,9 @@ defmodule EX.Worker do
   end
 
   @impl GenServer
-  def handle_cast({:put, hash, url}, state) do
-    new_state = Shortener.create_short_url(state, hash, url)
-    EX.Cache.put(:cache, hash, url)
-    {:noreply, new_state}
+  def handle_call({:put, url}, _timeout, state) do
+    {new_state, {key, value}} = EX.Shortener.create_short_url(state, url)
+    EX.Cache.put(:cache, key, value)
+    {:reply, {key, value}, new_state}
   end
 end

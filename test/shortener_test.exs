@@ -1,15 +1,28 @@
 defmodule ShortenerTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
 
-  setup do
-    EX.Shortener.new()
-  end
+  test "create will add key/value given url and hash" do
+    state = %{}
 
-  test "create will add key/value given url and hash", state do
-    assert EX.Shortener.get_url(state, "x") === :undefined
+    assert EX.Shortener.get_url(state, "77B5F6") === :undefined
 
-    new_state = EX.Shortener.create_short_url(state, "x", "google.com")
+    {new_state, {key, value}} = EX.Shortener.create_short_url(state, "google.com")
+    [{hash, url}] = Map.to_list(new_state)
+    assert key == "77B5F6"
+    assert value == "google.com"
+    assert key == hash
+    assert value == url
 
-    assert EX.Shortener.get_url(new_state, "x") === "google.com"
+    assert EX.Shortener.get_url(new_state, "77B5F6") === "google.com"
+
+    {final_state, {key, value}} = EX.Shortener.create_short_url(new_state, "amazon.com")
+    [_, {hash, url}] = Map.to_list(final_state)
+    assert key == "D07248"
+    assert value == "amazon.com"
+    assert key == hash
+    assert value == url
+
+    assert EX.Shortener.get_url(final_state, "77B5F6") === "google.com"
+    assert EX.Shortener.get_url(final_state, "D07248") === "amazon.com"
   end
 end
