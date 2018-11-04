@@ -6,12 +6,12 @@ defmodule CacheTest do
   end
 
   test "all returns state and put updates it" do
-    {:ok, _} = GenServer.start_link(EX.Cache, :ok)
+    {:ok, _} = GenServer.start_link(Example.Cache, :ok)
 
-    assert EX.Cache.all(:cache) === %{}
+    assert Example.Cache.all(:cache) === %{}
 
-    EX.Cache.put(:cache, "x", "google.com")
+    Example.Cache.put(:cache, "x", "google.com")
 
-    assert EX.Cache.all(:cache) === %{'x' => "google.com"}
+    assert Example.Cache.all(:cache) === %{'x' => "google.com"}
   end
 end

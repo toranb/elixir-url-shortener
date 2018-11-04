@@ -1,4 +1,4 @@
-defmodule EX.Cache do
+defmodule Example.Cache do
   use GenServer
 
   @database "./database"
@@ -7,7 +7,7 @@ defmodule EX.Cache do
     GenServer.start_link(__MODULE__, :ok, name: via(:cache))
   end
 
-  defp via(name), do: EX.Registry.via(name)
+  defp via(name), do: Example.Registry.via(name)
 
   @impl GenServer
   def init(:ok) do

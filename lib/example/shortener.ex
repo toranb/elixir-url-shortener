@@ -1,4 +1,4 @@
-defmodule EX.Shortener do
+defmodule Example.Shortener do
   def new(), do: %{}
 
   def get_url(state, hash) do

@@ -1,4 +1,4 @@
-defmodule EX.Application do
+defmodule Example.Application do
   use Application
 
   def start(_type, _args) do
@@ -6,12 +6,12 @@ defmodule EX.Application do
 
     children = [
       supervisor(ExampleWeb.Endpoint, []),
-      {Registry, keys: :unique, name: EX.Registry},
-      EX.Cache,
-      EX.Worker
+      {Registry, keys: :unique, name: Example.Registry},
+      Example.Cache,
+      Example.Worker
     ]
 
-    opts = [strategy: :one_for_one, name: EX.Supervisor]
+    opts = [strategy: :one_for_one, name: Example.Supervisor]
     Supervisor.start_link(children, opts)
   end
 
