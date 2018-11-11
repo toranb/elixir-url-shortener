@@ -12,7 +12,7 @@ defmodule Example.Shortener do
   end
 
   defp hmac(url) do
-    :crypto.hmac(:sha256, "example", url)
+    :crypto.hmac(:sha256, "type:link", url)
       |> Base.encode16
       |> String.slice(0, 6)
   end

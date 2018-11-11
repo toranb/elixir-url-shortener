@@ -9,21 +9,21 @@ defmodule Example.WorkerTest do
     {:ok, _} = GenServer.start_link(Example.Cache, :ok)
     {:ok, _} = GenServer.start_link(Example.Worker, :ok)
 
-    assert Example.Worker.get(:worker, "77B5F6") === :undefined
-    assert Example.Worker.get(:worker, "D07248") === :undefined
+    assert Example.Worker.get(:worker, "055577") === :undefined
+    assert Example.Worker.get(:worker, "365733") === :undefined
 
     {key, value} = Example.Worker.put(:worker, "google.com")
-    assert key == "77B5F6"
+    assert key == "055577"
     assert value == "google.com"
 
-    assert Example.Worker.get(:worker, "77B5F6") === "google.com"
-    assert Example.Worker.get(:worker, "D07248") === :undefined
+    assert Example.Worker.get(:worker, "055577") === "google.com"
+    assert Example.Worker.get(:worker, "365733") === :undefined
 
     {key, value} = Example.Worker.put(:worker, "amazon.com")
-    assert key == "D07248"
+    assert key == "365733"
     assert value == "amazon.com"
 
-    assert Example.Worker.get(:worker, "77B5F6") === "google.com"
-    assert Example.Worker.get(:worker, "D07248") === "amazon.com"
+    assert Example.Worker.get(:worker, "055577") === "google.com"
+    assert Example.Worker.get(:worker, "365733") === "amazon.com"
   end
 end
