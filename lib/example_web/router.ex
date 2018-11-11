@@ -7,8 +7,7 @@ defmodule ExampleWeb.Router do
 
   scope "/api", ExampleWeb do
     pipe_through(:api)
-
-    get("/:id", UrlController, :show)
-    post("/create", UrlController, :create)
+    resources "/urls", UrlController, only: [:show, :create]
+    resources "/users", UserController, only: [:show, :create]
   end
 end

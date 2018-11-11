@@ -1,12 +1,12 @@
-defmodule Example.Cache do
+defmodule Example.UserCache do
   use GenServer
 
   import Example.File, only: [write: 3, read: 1]
 
-  @database "./database/url"
+  @database "./database/user"
 
   def start_link(_args) do
-    GenServer.start_link(__MODULE__, :ok, name: via(:cache))
+    GenServer.start_link(__MODULE__, :ok, name: via(:user_cache))
   end
 
   defp via(name), do: Example.Registry.via(name)

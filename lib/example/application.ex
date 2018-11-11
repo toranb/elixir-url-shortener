@@ -8,7 +8,9 @@ defmodule Example.Application do
       supervisor(ExampleWeb.Endpoint, []),
       {Registry, keys: :unique, name: Example.Registry},
       Example.Cache,
-      Example.Worker
+      Example.UserCache,
+      Example.Worker,
+      Example.User
     ]
 
     opts = [strategy: :one_for_one, name: Example.Supervisor]
