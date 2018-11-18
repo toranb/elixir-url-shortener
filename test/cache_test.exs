@@ -12,6 +12,6 @@ defmodule CacheTest do
 
     Example.Cache.put(:cache, "x", "google.com")
 
-    assert Example.Cache.all(:cache) === %{'x' => "google.com"}
+    assert Example.Cache.all(:cache) === %{"x" => "google.com"}
   end
 end

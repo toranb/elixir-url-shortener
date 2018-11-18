@@ -10,6 +10,11 @@ defmodule ExampleWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
 
+  plug Plug.Session,
+    store: :cookie,
+    key: "_example_key",
+    signing_salt: "8ixXSdpw"
+
   plug ExampleWeb.Router
 
   def init(_key, config) do

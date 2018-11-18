@@ -1,6 +1,19 @@
 defmodule ExampleWeb.UrlController do
   use ExampleWeb, :controller
 
+  plug :redirect_unauthorized
+
+  def redirect_unauthorized(conn, _opts) do
+    current_user = Map.get(conn.assigns, :current_user)
+    if current_user != nil and current_user.username != nil do
+      conn
+    else
+      conn
+        |> redirect(to: session_path(conn, :new))
+        |> halt()
+    end
+  end
+
   def show(conn, %{"id" => id}) do
     url = Example.Worker.get(:worker, "#{id}")
     render(conn, "show.json", %{id: id, url: url})

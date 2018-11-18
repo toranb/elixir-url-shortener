@@ -14,6 +14,8 @@ defmodule Example.UserTest do
     assert value == "toranb"
 
     assert Example.User.get(:user, "01D3CC") === "toranb"
+    assert Example.User.get_by_username_and_password(:user, "toranb", "abc123") === "01D3CC"
+    assert Example.User.get_by_username_and_password(:user, "jarrod", "def456") === nil
 
     {key, value} = Example.User.put(:user, "jarrod", "def456")
     assert key == "962EDC"
@@ -21,5 +23,9 @@ defmodule Example.UserTest do
 
     assert Example.User.get(:user, "01D3CC") === "toranb"
     assert Example.User.get(:user, "962EDC") === "jarrod"
+
+    assert Example.User.get_by_username_and_password(:user, "toranb", "abc123") === "01D3CC"
+    assert Example.User.get_by_username_and_password(:user, "jarrod", "def456") === "962EDC"
+    assert Example.User.get_by_username_and_password(:user, "jarrod", "def457") === nil
   end
 end

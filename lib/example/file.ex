@@ -20,7 +20,7 @@ defmodule Example.File do
 
   defp tuple_from_filesystem(key, database) do
     {:ok, contents} = File.read(file_name(database, key))
-    {key, :erlang.binary_to_term(contents)}
+    {"#{key}", :erlang.binary_to_term(contents)}
   end
 
   defp file_name(database, key) do

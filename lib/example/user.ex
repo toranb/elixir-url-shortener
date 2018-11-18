@@ -3,6 +3,7 @@ defmodule Example.User do
 
   alias Example.Hash
   alias Example.Password
+  alias Example.FindUser
   alias Example.UserCache
 
   def start_link(_args) do
@@ -26,14 +27,23 @@ defmodule Example.User do
     GenServer.call(via(name), {:get, id})
   end
 
+  def get_by_username_and_password(name, username, password) do
+    GenServer.call(via(name), {:get, username, password})
+  end
+
   def put(name, username, password) do
     GenServer.call(via(name), {:put, username, password})
   end
 
   @impl GenServer
   def handle_call({:get, id}, _timeout, state) do
-    user_id = String.to_charlist(id)
-    {username, _} = Map.get(state, user_id)
+    {username, _} = Map.get(state, id)
+    {:reply, username, state}
+  end
+
+  @impl GenServer
+  def handle_call({:get, username, password}, _timeout, state) do
+    username = FindUser.with_username_and_password(state, username, password)
     {:reply, username, state}
   end
 
@@ -41,9 +51,8 @@ defmodule Example.User do
   def handle_call({:put, username, password}, _timeout, state) do
     hash = Password.hash(password)
     id = Hash.hmac("type:user", username)
-    user_id = String.to_charlist(id)
-    new_state = Map.put(state, user_id, {username, hash})
-    UserCache.put(:user_cache, user_id, {username, hash})
+    new_state = Map.put(state, id, {username, hash})
+    UserCache.put(:user_cache, id, {username, hash})
     {:reply, {id, username}, new_state}
   end
 end

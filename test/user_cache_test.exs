@@ -12,6 +12,6 @@ defmodule UserCacheTest do
 
     Example.UserCache.put(:user_cache, "x", {"abc", "def"})
 
-    assert Example.UserCache.all(:user_cache) === %{'x' => {"abc", "def"}}
+    assert Example.UserCache.all(:user_cache) === %{"x" => {"abc", "def"}}
   end
 end
