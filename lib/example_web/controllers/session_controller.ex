@@ -14,7 +14,7 @@ defmodule ExampleWeb.SessionController do
       id ->
         conn
           |> put_session(:user_id, id)
-          |> redirect(to: user_path(conn, :show, "#{id}"))
+          |> redirect(to: Routes.user_path(conn, :show, "#{id}"))
     end
   end
 end

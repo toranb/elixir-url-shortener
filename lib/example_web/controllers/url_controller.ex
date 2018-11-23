@@ -9,7 +9,7 @@ defmodule ExampleWeb.UrlController do
       conn
     else
       conn
-        |> redirect(to: session_path(conn, :new))
+        |> redirect(to: Routes.session_path(conn, :new))
         |> halt()
     end
   end
