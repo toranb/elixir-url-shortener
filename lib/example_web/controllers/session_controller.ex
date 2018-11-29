@@ -8,7 +8,7 @@ defmodule ExampleWeb.SessionController do
   end
 
   def create(conn, %{"username" => username, "password" => password}) do
-    case Example.User.get_by_username_and_password(:user, username, password) do
+    case Example.Logon.get_by_username_and_password(:logon, username, password) do
       nil ->
         render(conn, "new.html")
       id ->

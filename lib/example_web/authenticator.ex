@@ -8,7 +8,7 @@ defmodule ExampleWeb.Authenticator do
       nil ->
         conn
       id ->
-        username = Example.User.get(:user, "#{id}")
+        username = Example.Logon.get(:logon, "#{id}")
         assign(conn, :current_user, %{id: id, username: username})
     end
   end

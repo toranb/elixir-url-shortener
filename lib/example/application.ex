@@ -10,7 +10,7 @@ defmodule Example.Application do
       Example.Cache,
       Example.UserCache,
       Example.Worker,
-      Example.User
+      Example.Logon
     ]
 
     opts = [strategy: :one_for_one, name: Example.Supervisor]
