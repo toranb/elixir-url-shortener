@@ -1,5 +1,5 @@
 defmodule ExampleWeb.AuthenticatorTest do
-  use ExampleWeb.ConnCase
+  use ExampleWeb.ConnCase, async: false
 
   test "login will authenticate the user and redirect unauthenticated requests", %{conn: conn} do
     id = "055577"

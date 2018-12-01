@@ -1,9 +1,7 @@
 defmodule Example.UserCache do
   use GenServer
 
-  import Example.File, only: [write: 3, read: 1]
-
-  @database "./database/user"
+  alias Example.Users
 
   def start_link(_args) do
     GenServer.start_link(__MODULE__, :ok, name: via(:user_cache))
@@ -13,13 +11,7 @@ defmodule Example.UserCache do
 
   @impl GenServer
   def init(:ok) do
-    File.mkdir_p!(@database)
-    {:ok, %{}, {:continue, :init}}
-  end
-
-  @impl GenServer
-  def handle_continue(:init, state) do
-    {:noreply, state}
+    {:ok, %{}}
   end
 
   def all(name) do
@@ -32,13 +24,13 @@ defmodule Example.UserCache do
 
   @impl GenServer
   def handle_call({:all}, _timeout, _state) do
-    state = read(@database)
+    state = for %Example.User{id: id, username: key, hash: value} <- Users.all(), into: %{}, do: {id, {key, value}}
     {:reply, state, state}
   end
 
   @impl GenServer
-  def handle_cast({:put, key, value}, state) do
-    write(@database, key, value)
-    {:noreply, Map.put(state, key, value)}
+  def handle_cast({:put, key, {username, hash}}, state) do
+    Users.create_user(%{id: key, username: username, hash: hash})
+    {:noreply, Map.put(state, key, {username, hash})}
   end
 end

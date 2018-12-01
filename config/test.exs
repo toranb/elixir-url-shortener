@@ -8,3 +8,11 @@ config :example, ExampleWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+# Configure your database
+config :example, Example.Repo,
+  username: "postgres",
+  password: "postgres",
+  database: "example_test",
+  hostname: "localhost",
+  pool: Ecto.Adapters.SQL.Sandbox

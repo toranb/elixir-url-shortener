@@ -1,5 +1,5 @@
 defmodule ExampleWeb.UserControllerTest do
-  use ExampleWeb.ConnCase
+  use ExampleWeb.ConnCase, async: false
 
   test "GET and POST fetch and create users", %{conn: conn} do
     id = "01D3CC"

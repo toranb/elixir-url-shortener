@@ -1,9 +1,7 @@
 defmodule Example.Cache do
   use GenServer
 
-  import Example.File, only: [write: 3, read: 1]
-
-  @database "./database/url"
+  alias Example.Links
 
   def start_link(_args) do
     GenServer.start_link(__MODULE__, :ok, name: via(:cache))
@@ -13,13 +11,7 @@ defmodule Example.Cache do
 
   @impl GenServer
   def init(:ok) do
-    File.mkdir_p!(@database)
-    {:ok, %{}, {:continue, :init}}
-  end
-
-  @impl GenServer
-  def handle_continue(:init, state) do
-    {:noreply, state}
+    {:ok, %{}}
   end
 
   def all(name) do
@@ -32,13 +24,13 @@ defmodule Example.Cache do
 
   @impl GenServer
   def handle_call({:all}, _timeout, _state) do
-    state = read(@database)
+    state = for %Example.Link{hash: key, url: value} <- Links.all(), into: %{}, do: {key, value}
     {:reply, state, state}
   end
 
   @impl GenServer
   def handle_cast({:put, key, value}, state) do
-    write(@database, key, value)
+    Links.create_link(%{hash: key, url: value})
     {:noreply, Map.put(state, key, value)}
   end
 end

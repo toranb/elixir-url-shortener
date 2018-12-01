@@ -1,5 +1,5 @@
 defmodule ExampleWeb.SessionControllerTest do
-  use ExampleWeb.ConnCase
+  use ExampleWeb.ConnCase, async: false
 
   import Plug.Conn, only: [get_session: 2]
 

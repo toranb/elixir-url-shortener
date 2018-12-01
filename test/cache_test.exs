@@ -1,9 +1,5 @@
 defmodule CacheTest do
-  use ExUnit.Case, async: false
-
-  setup do
-    TestProject.Helpers.cleanup
-  end
+  use ExampleWeb.DataCase, async: false
 
   test "all returns state and put updates it" do
     {:ok, _} = GenServer.start_link(Example.Cache, :ok)

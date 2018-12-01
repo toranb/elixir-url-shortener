@@ -1,5 +1,5 @@
 defmodule ExampleWeb.UrlControllerTest do
-  use ExampleWeb.ConnCase
+  use ExampleWeb.ConnCase, async: false
 
   import Plug.Test, only: [init_test_session: 2]
 

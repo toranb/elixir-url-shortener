@@ -1,9 +1,5 @@
 defmodule Example.FindUserTest do
-  use ExUnit.Case, async: false
-
-  setup do
-    TestProject.Helpers.cleanup
-  end
+  use ExampleWeb.DataCase, async: false
 
   test "find with username and password" do
     state = %{}

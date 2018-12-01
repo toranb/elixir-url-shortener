@@ -1,9 +1,5 @@
 defmodule Example.WorkerTest do
-  use ExUnit.Case, async: false
-
-  setup do
-    TestProject.Helpers.cleanup
-  end
+  use ExampleWeb.DataCase, async: false
 
   test "get and put work" do
     {:ok, _} = GenServer.start_link(Example.Cache, :ok)
