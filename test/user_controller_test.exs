@@ -7,10 +7,10 @@ defmodule ExampleWeb.UserControllerTest do
     password = "abc123"
 
     toran = %{"id" => id, "username" => username}
-    result = post(conn, user_path(conn, :create, %{user: %{username: username, password: password}}))
+    result = post(conn, Routes.user_path(conn, :create, %{user: %{username: username, password: password}}))
     assert json_response(result, 200) == toran
 
-    get_result = get(conn, user_path(conn, :show, id))
+    get_result = get(conn, Routes.user_path(conn, :show, id))
     assert json_response(get_result, 200) == toran
   end
 end

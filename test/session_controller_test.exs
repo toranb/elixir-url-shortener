@@ -10,10 +10,10 @@ defmodule ExampleWeb.SessionControllerTest do
   @login_form "<form action=\"/login\" method=\"POST\">"
 
   test "create will put user id into session and redirect", %{conn: conn} do
-    result = post(conn, user_path(conn, :create, %{user: @data}))
+    result = post(conn, Routes.user_path(conn, :create, %{user: @data}))
     assert json_response(result, 200) == @toran
 
-    login = post(conn, session_path(conn, :create, @data))
+    login = post(conn, Routes.session_path(conn, :create, @data))
     assert html_response(login, 302) =~ "redirected"
     for {"location", value} <- login.resp_headers, do: assert value == "/api/users/#{@id}"
 
@@ -24,16 +24,16 @@ defmodule ExampleWeb.SessionControllerTest do
   test "failed login redirects to login form and does not put user id into session", %{conn: conn} do
     credentials = %{username: @username, password: "x"}
 
-    login = post(conn, session_path(conn, :create, credentials))
+    login = post(conn, Routes.session_path(conn, :create, credentials))
     assert html_response(login, 200) =~ @login_form
 
     session_id = get_session(login, :user_id)
     assert session_id == nil
 
-    result = post(conn, user_path(conn, :create, %{user: @data}))
+    result = post(conn, Routes.user_path(conn, :create, %{user: @data}))
     assert json_response(result, 200) == @toran
 
-    login = post(conn, session_path(conn, :create, credentials))
+    login = post(conn, Routes.session_path(conn, :create, credentials))
     assert html_response(login, 200) =~ @login_form
 
     session_id = get_session(login, :user_id)
@@ -41,7 +41,7 @@ defmodule ExampleWeb.SessionControllerTest do
   end
 
   test "new route will return the login form", %{conn: conn} do
-    login = get(conn, session_path(conn, :new))
+    login = get(conn, Routes.session_path(conn, :new))
     assert html_response(login, 200) =~ @login_form
   end
 end
