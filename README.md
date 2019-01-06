@@ -52,3 +52,22 @@ curl --request POST \
 ```
 
 With each evolution and learning included here I blog about it at [https://toranbillups.com](https://toranbillups.com)
+
+
+## Deployment
+
+1) install docker
+
+    https://docs.docker.com/docker-for-mac/
+
+2) build with docker-compose
+
+```bash
+docker-compose build
+```
+
+3) spin up 2 elixir apps (behind nginx)
+
+```bash
+docker-compose up --scale app=2
+```
